@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="en-gb"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Windows PATH 정리 및 중복 제거 도구(Windows PATH Cleaner and Duplicate Remove) batch file - castimonia.com</title><meta name="description" content="파이썬을 설치하다 보면, path에 추가해야 하는 경우가 있는데, 하다보면 중복 추가가 되는 경우가 있다. 이를 해결하기 위한 배치파일이다. path.txt에 기존 경로와 변경될 경로를 모두 백업하는 기능도 있음. @echo off setlocal enabledelayedexpansion :: PATH 백업 파일 이름 고정 set &quot;backupFile&#x3D;path.txt&quot; :: 현재 PATH 환경 변수 가져오기&amp;hellip;"><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://castimonia.github.io/windows-path-jeongri-mic-jungbog-jegeo-doguwindows-path-cleaner-and-duplicate-remove/"><link rel="alternate" type="application/atom+xml" href="https://castimonia.github.io/feed.xml" title="castimonia.com - RSS"><link rel="alternate" type="application/json" href="https://castimonia.github.io/feed.json" title="castimonia.com - JSON"><meta property="og:title" content="Windows PATH 정리 및 중복 제거 도구(Windows PATH Cleaner and Duplicate Remove) batch file"><meta property="og:site_name" content="castimonia.com"><meta property="og:description" content="파이썬을 설치하다 보면, path에 추가해야 하는 경우가 있는데, 하다보면 중복 추가가 되는 경우가 있다. 이를 해결하기 위한 배치파일이다. path.txt에 기존 경로와 변경될 경로를 모두 백업하는 기능도 있음. @echo off setlocal enabledelayedexpansion :: PATH 백업 파일 이름 고정 set &quot;backupFile&#x3D;path.txt&quot; :: 현재 PATH 환경 변수 가져오기&amp;hellip;"><meta property="og:url" content="https://castimonia.github.io/windows-path-jeongri-mic-jungbog-jegeo-doguwindows-path-cleaner-and-duplicate-remove/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://castimonia.github.io/assets/css/style.css?v&#x3D;9b02a974ddb182516a41734026b76985"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://castimonia.github.io/windows-path-jeongri-mic-jungbog-jegeo-doguwindows-path-cleaner-and-duplicate-remove/"},"headline":"Windows PATH 정리 및 중복 제거 도구(Windows PATH Cleaner and Duplicate Remove) batch file","datePublished":"2024-12-28T20:19-05:00","dateModified":"2025-06-27T06:03-04:00","description":"파이썬을 설치하다 보면, path에 추가해야 하는 경우가 있는데, 하다보면 중복 추가가 되는 경우가 있다. 이를 해결하기 위한 배치파일이다. path.txt에 기존 경로와 변경될 경로를 모두 백업하는 기능도 있음. @echo off setlocal enabledelayedexpansion :: PATH 백업 파일 이름 고정 set \"backupFile=path.txt\" :: 현재 PATH 환경 변수 가져오기&hellip;","author":{"@type":"Person","name":"innominata","url":"https://castimonia.github.io/authors/innominata/"},"publisher":{"@type":"Organization","name":"innominata"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript></head><body class="post-template"><header class="top js-header"><a class="logo" href="https://castimonia.github.io/">castimonia.com</a></header><main class="post"><article class="content"><div class="hero hero--noimage"><header class="hero__content"><div class="wrapper"><h1>Windows PATH 정리 및 중복 제거 도구(Windows PATH Cleaner and Duplicate Remove) batch file</h1><div class="feed__meta content__meta"><a href="https://castimonia.github.io/authors/innominata/" class="feed__author">innominata</a> <time datetime="2024-12-28T20:19" class="feed__date">December 28, 2024</time></div></div></header></div><div class="entry-wrapper content__entry"><p>파이썬을 설치하다 보면, path에 추가해야 하는 경우가 있는데, 하다보면 중복 추가가 되는 경우가 있다.<br>이를 해결하기 위한 배치파일이다.</p><p>path.txt에 기존 경로와 변경될 경로를 모두 백업하는 기능도 있음.</p><pre class="language-none"><code>@echo off
+setlocal enabledelayedexpansion
+
+:: PATH 백업 파일 이름 고정
+set "backupFile=path.txt"
+
+:: 현재 PATH 환경 변수 가져오기
+set "originalPath=%PATH%"
+
+:: PATH 백업: 첫 번째 줄에 변경 전 경로 저장
+echo Backing up current PATH to "%backupFile%"
+echo %originalPath% &gt; "%backupFile%"
+if %errorlevel% neq 0 (
+echo Failed to backup PATH. Exiting.
+pause
+exit /b 1
+)
+
+echo PATH successfully backed up to "%backupFile%".
+
+:: 중복 제거를 위한 초기화
+set "newPath="
+set "tempPath=%originalPath%"
+set "pathChanged=0"
+
+:remove_duplicate
+:: 첫 번째 경로 추출
+for /f "tokens=1* delims=;" %%a in ("%tempPath%") do (
+set "currentPath=%%~a"
+set "tempPath=%%b"
+)
+
+:: 현재 경로가 비어 있으면 종료
+if not defined currentPath goto :finalize
+
+:: 현재 경로가 이미 newPath에 포함되어 있는지 확인
+if defined newPath (
+echo !newPath! | findstr /i /x /c:"!currentPath!" &gt;nul
+if not errorlevel 1 (
+goto :next
+)
+)
+
+:: 중복이 아니면 newPath에 추가
+if "!newPath!"=="" (
+set "newPath=!currentPath!"
+) else (
+set "newPath=!newPath!;!currentPath!"
+set "pathChanged=1"
+)
+
+:next
+:: tempPath가 비어 있으면 종료
+if "!tempPath!" neq "" (
+goto :remove_duplicate
+)
+
+:finalize
+:: 중복 제거된 PATH 출력
+echo Original PATH:
+echo %originalPath%
+
+if "!pathChanged!"=="0" (
+echo.
+echo No duplicates found. PATH is already clean.
+echo %originalPath% &gt;&gt; "%backupFile%"
+pause
+exit /b 0
+)
+
+echo.
+echo Cleaned PATH:
+echo !newPath!
+
+:: PATH 백업: 두 번째 줄에 변경 후 경로 저장
+echo !newPath! &gt;&gt; "%backupFile%"
+
+:: PATH 환경 변수 업데이트
+setx PATH "!newPath!" &gt;nul
+if %errorlevel% neq 0 (
+echo Failed to update PATH. Exiting.
+pause
+exit /b 1
+)
+
+echo.
+echo PATH has been updated successfully.
+
+:: 재부팅 안내 메시지
+echo.
+echo Note: To apply the changes system-wide, please restart your computer or open a new Command Prompt session.
+pause</code></pre></div><footer class="content__footer"><div class="entry-wrapper"><p class="content__updated">This article was updated on June 27, 2025</p><div class="content__actions"><ul class="content__tag"><li><a href="https://castimonia.github.io/tags/batch/">batch</a></li><li><a href="https://castimonia.github.io/tags/data/">Data</a></li><li><a href="https://castimonia.github.io/tags/path/">path</a></li><li><a href="https://castimonia.github.io/tags/python/">python</a></li></ul><div class="content__share"><button class="btn--icon content__share-button js-content__share-button"><svg width="20" height="20" aria-hidden="true"><use xlink:href="https://castimonia.github.io/assets/svg/svg-map.svg#share"></use></svg> <span>Share It</span></button><div class="content__share-popup js-content__share-popup"></div></div></div><div class="content__bio bio"><div><h3 class="h4 bio__name"><a href="https://castimonia.github.io/authors/innominata/" rel="author">innominata</a></h3></div></div></div><nav class="content__nav"><div class="wrapper"><div class="content__nav-inner"><div class="content__nav-prev"><a href="https://castimonia.github.io/byuti-insaideu-the-beauty-inside-2015/" class="content__nav-link" rel="prev"><div><span>Previous</span> 뷰티 인사이드 (The Beauty Inside, 2015)</div></a></div><div class="content__nav-next"><a href="https://castimonia.github.io/beulrogeu-ijeon-wanryo/" class="content__nav-link" rel="next"><div><span>Next</span> 블로그 이전 완료</div></a></div></div></div></nav></footer></article><div class="content__related related"><div class="wrapper"><h2 class="h4 related__title">You should also read:</h2><article class="feed__item feed__item--centered"><div class="feed__content"><header><div class="feed__meta"><a href="https://castimonia.github.io/authors/innominata/" class="feed__author">innominata</a> <time datetime="2007-06-16T21:56" class="feed__date">June 16, 2007</time></div><h3 class="feed__title"><a href="https://castimonia.github.io/nexusfile-v5-beta3/">NexusFile V beta3</a></h3></header><p>Nexusfile 5의 세번째 베타 버전이 나왔다. 깔끔.. 이번에는 FTP기능을 위주로 업글된것 같다. 나한테는 별로 필요없는 기능이지만.. 그래두 좋아좋아.. 탭기능 추가... 홋홋..(새탭 단축키: Ctrl+T, 탭간 이동: Ctrl+Tab) xiles.net NexusFile V Beta3 (ver 5.0) NexusFile V 세번째 베타버전입니다. 정식 버전까지는 새로운 기능의 추가보다는 우선 오류 수정 및&hellip;</p><a href="https://castimonia.github.io/nexusfile-v5-beta3/" class="readmore feed__readmore">Continue reading...</a></div></article><article class="feed__item feed__item--centered"><div class="feed__content"><header><div class="feed__meta"><a href="https://castimonia.github.io/authors/innominata/" class="feed__author">innominata</a> <time datetime="2007-04-16T06:44" class="feed__date">April 16, 2007</time></div><h3 class="feed__title"><a href="https://castimonia.github.io/nexusfile-v-preview-6/">NexusFile V preview 6</a></h3></header><p>나는 도스세대이다. M-Dir을 쓰다가는.. 윈도 98까지도 M-Dir을 썼었나보다. 그러다가 X-file을 알게 되었고.. 이넘이 NexusFile로 바뀌었다. 흠.. 4.2버전을 쓰면서 유니코드 지원만 빼놓고 나머지는 버그조차도 원래 기능이었던 양 적응하며 잘쓰고 있었다. '뭐.. 유니코드 지원만 해주면되지.. 뭐 더 필요한게 있겠어?' 라며 정훈님이 작업하신다는 이야기에도 한번씩 깔아보기만 하고 늘..</p><a href="https://castimonia.github.io/nexusfile-v-preview-6/" class="readmore feed__readmore">Continue reading...</a></div></article><article class="feed__item feed__item--centered"><div class="feed__content"><header><div class="feed__meta"><a href="https://castimonia.github.io/authors/innominata/" class="feed__author">innominata</a> <time datetime="2006-08-26T11:02" class="feed__date">August 26, 2006</time></div><h3 class="feed__title"><a href="https://castimonia.github.io/cinjeolhan-geumjassi-2005-sympathy-for-lady-vengeance/">친절한 금자씨 (2005, Sympathy For Lady Vengeance)</a></h3></header><p>드디어 박찬욱 감독의 복수 삼부작을 모두 다 봤다. 친절한 금자씨.. 이영애가 참으로 예쁘게 나왔다. 어쩜 그리 이쁠 수가 있는지.. (그래도 나에게는 수정씨만이...+_+) 마지막에 무엇인가 반전이 숨어있을줄 알았는데.. 없었다.-_-;; 덧) 박찬욱 영화에서는 벽의 디자인이 참.. 다양한 것 같다. 평점: ★★★★ “받은 만큼 드릴게요” - 2005년 가장&hellip;</p><a href="https://castimonia.github.io/cinjeolhan-geumjassi-2005-sympathy-for-lady-vengeance/" class="readmore feed__readmore">Continue reading...</a></div></article></div></div></main><footer class="footer footer--glued"><div class="wrapper"><div class="footer__copyright">Powered by Publii</div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://castimonia.github.io/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://castimonia.github.io/assets/js/scripts.min.js?v&#x3D;548663b90e1600fd2c2dd54433d04b71"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script></body></html>
