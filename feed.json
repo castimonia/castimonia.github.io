@@ -10,6 +10,19 @@
     },
     "items": [
         {
+            "id": "https://castimonia.com/beulrogeu-isa-wanryo-2/",
+            "url": "https://castimonia.com/beulrogeu-isa-wanryo-2/",
+            "title": "블로그 이사 완료",
+            "content_html": "<p>최근 PHP 취약점이 발견되었다 하는데, 호스팅 회사의 PHP는 버전이 그대로여서, 기왕 하는 김에 다른 플랫폼으로 옮겨 보았다.</p>\n<p>그간 트래픽 초과문제도 자주 발생했어서...</p>\n<p>뭐 그리 사람이 많이 오는 곳이라고 트래픽이 넘나 걱정이 되어서... (아마 AI crawler 때문이겠지...) 여러 셋팅도 바꿔 보았는데, 기왕이면 더 안전한게 좋을 것 같기도 해서 옮겼다.</p>\n<p>아직 익숙하진 않지만, 그래도 원하는 기능들이랑 모양은 모두 갖추어서 좋네.</p>",
+            "author": {
+                "name": "innominata"
+            },
+            "tags": [
+            ],
+            "date_published": "2026-11-02T16:03:55-05:00",
+            "date_modified": "2026-11-02T16:07:25-05:00"
+        },
+        {
             "id": "https://castimonia.com/sarangyi-gaseol-the-love-hypothesis-2026/",
             "url": "https://castimonia.com/sarangyi-gaseol-the-love-hypothesis-2026/",
             "title": "사랑의 가설 (The Love Hypothesis, 2026)",
@@ -125,19 +138,6 @@
             ],
             "date_published": "2025-06-26T21:14:55-04:00",
             "date_modified": "2025-06-27T07:54:07-04:00"
-        },
-        {
-            "id": "https://castimonia.com/beulrogeu-ijeon-wanryo/",
-            "url": "https://castimonia.com/beulrogeu-ijeon-wanryo/",
-            "title": "블로그 이전 완료",
-            "content_html": "\n<p>기존에 안되던 기능들이 많아서... 한동안 휴지기를 갖고 있다가 이전함.</p>\n\n\n\n<p>도메인만 아직 못 가져왔는데, 3년전에도 똑같은 일이 있었어서, 금방 해결되리라 생각함.</p>\n\n\n\n\n\n",
-            "author": {
-                "name": "innominata"
-            },
-            "tags": [
-            ],
-            "date_published": "2025-06-26T08:08:11-04:00",
-            "date_modified": "2025-06-27T07:53:56-04:00"
         }
     ]
 }

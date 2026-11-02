@@ -17,3 +17,25 @@ button,input,select,textarea{font-family:var(--font-ui,"Gowun Dodum","Malgun Got
 .sidebar .notice a{min-width:0;overflow-wrap:anywhere}
 /* Use the page's vertical scrolling; never create a separate archive scrollbar. */
 .sidebar,.sidebar-inner,.sidebar nav{max-height:none;overflow:visible}
+
+
+/* v0.1.8: Real Publii tag URLs shown as categories above the year/month archive. */
+.sidebar-categories{margin:0 0 30px}
+.sidebar-categories h2{margin-bottom:12px}
+.sidebar .category-nav{display:block;overflow:visible;max-height:none}
+.category-nav ul{list-style:none;margin:0;padding:0}
+.category-nav li{margin:0;padding:3px 0;line-height:1.65}
+.category-nav a{display:inline-block;color:#555b61;font-size:13px;overflow-wrap:anywhere}
+.category-nav a:hover,.category-nav a:focus-visible{color:var(--accent)}
+.category-nav small{color:#979a9e;font-size:10px;white-space:nowrap}
+@media(max-width:800px){.sidebar .category-nav{display:block}.category-nav ul{display:flex;flex-wrap:wrap;gap:0 15px}.category-nav li{padding:2px 0}.sidebar-categories{margin-bottom:24px}}
+
+/* v0.1.9: Clickable post-specific tags below the article body. */
+.post-tags{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px 14px;margin:32px 0 0;font-family:var(--font-ui,"Gowun Dodum","Malgun Gothic",Arial,sans-serif)}
+.post-tags-label{color:var(--muted);font-size:10px;letter-spacing:.12em;font-weight:700;line-height:1.7;padding:6px 0}
+.post-tags-list{display:flex;flex-wrap:wrap;align-items:center;gap:7px;list-style:none;margin:0;padding:0;min-width:0}
+.post-tags-list li{margin:0;padding:0}
+.post-tags-list a{display:inline-block;color:#5d636b;font-size:12px;line-height:1.6;padding:4px 9px;border:1px solid #e6e7e9;border-radius:3px;background:#fafafa;overflow-wrap:anywhere}
+.post-tags-list a:hover,.post-tags-list a:focus-visible{color:var(--accent);border-color:#b9cde9;background:#f5f8fd}
+.post-tags + .post-link{margin-top:17px}
+@media(max-width:800px){.post-tags{gap:5px 11px}.post-tags-label{padding:6px 0}}

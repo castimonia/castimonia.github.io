@@ -85,5 +85,15 @@
       // This HTML is generated on the same site and uses the same post template.
       body.innerHTML = content.innerHTML;
       for (const el of body.querySelectorAll('script')) el.remove();
+      // The homepage switches articles without a full page reload. Recreate
+      // the post-specific tags from the actual post page after hydration.
+      const existingTags = article.querySelector('.post-tags');
+      if (existingTags) existingTags.remove();
+      const sourceTags = doc.querySelector('.post-detail .post-tags');
+      if (sourceTags && sourceTags.querySelector('a[rel="tag"]')) {
+        const tags = sourceTags.cloneNode(true);
+        for (const el of tags.querySelectorAll('script,style,iframe')) el.remove();
+        article.insertBefore(tags, links);
+      }
     }).catch(fallback);
 })();
