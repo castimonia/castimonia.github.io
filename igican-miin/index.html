@@ -14,7 +14,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="https://castimonia.com/assets/icons/favicon-16x16.png">
   <link rel="icon" type="image/x-icon" href="https://castimonia.com/assets/icons/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="https://castimonia.com/assets/icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="https://castimonia.com/assets/css/main.css?v&#x3D;6b76105fc3ec3cd4d93734d4457611ed">
+  <link rel="stylesheet" href="https://castimonia.com/assets/css/main.css?v&#x3D;75247de739f09e805622a9b6fc98d637">
   <meta name="generator" content="Publii Open-Source CMS for Static Site">
 
 </head>
@@ -26,7 +26,7 @@
     <p class="site-subtitle">흘러가는 날들 사이, 남겨 둔 마음</p>
   </header>
   <div class="layout">
-    <aside class="sidebar" aria-label="연도별 글목록">
+    <aside class="sidebar" aria-label="글 탐색 및 검색">
       <div class="sidebar-inner">
       <aside class="notice" aria-label="고정 공지">
         <span class="notice-label">공지</span>
@@ -36,20 +36,22 @@
           <h2>CATEGORIES</h2>
           <nav class="category-nav" aria-label="글 카테고리 목록">
             <ul>
+                <li><a href="https://castimonia.com/tags/mind/">Mind <small>(37)</small></a></li>
                 <li><a href="https://castimonia.com/tags/monologue/">Monologue <small>(763)</small></a></li>
                 <li><a href="https://castimonia.com/tags/movie/">Movie <small>(436)</small></a></li>
-                <li><a href="https://castimonia.com/tags/my-stuff/">My Stuff <small>(155)</small></a></li>
-                <li><a href="https://castimonia.com/tags/clip/">Clip <small>(116)</small></a></li>
-                <li><a href="https://castimonia.com/tags/favorite/">Favorite <small>(94)</small></a></li>
-                <li><a href="https://castimonia.com/tags/e29885e29885e29885e29886/">★★★☆ <small>(56)</small></a></li>
-                <li><a href="https://castimonia.com/tags/macintosh/">Macintosh <small>(56)</small></a></li>
-                <li><a href="https://castimonia.com/tags/e29885e29885e29885e29885/">★★★★ <small>(54)</small></a></li>
-                <li><a href="https://castimonia.com/tags/mind/">Mind <small>(37)</small></a></li>
-                <li><a href="https://castimonia.com/tags/e29885e29885e29885/">★★★ <small>(31)</small></a></li>
                 <li><a href="https://castimonia.com/tags/data/">Data <small>(31)</small></a></li>
-                <li><a href="https://castimonia.com/tags/utility/">Utility <small>(27)</small></a></li>
+                <li><a href="https://castimonia.com/tags/culture/">Culture <small>(16)</small></a></li>
             </ul>
           </nav>
+        </section>
+        <section class="sidebar-search" aria-label="글 검색">
+          <h2>SEARCH</h2>
+          <form class="site-search-form" role="search" action="https://castimonia.com/" method="get" data-source-url="https://castimonia.com/">
+            <label class="sr-only" for="castimonia-search">글 검색어</label>
+            <input type="search" id="castimonia-search" name="q" placeholder="글 제목이나 태그 검색" autocomplete="off" aria-controls="castimonia-search-results">
+            <button type="submit" aria-label="검색">검색</button>
+          </form>
+          <div id="castimonia-search-results" class="search-results" aria-live="polite" aria-atomic="false" hidden></div>
         </section>
         <h2>ARCHIVES</h2>
         <nav aria-label="연도와 월별 아카이브">
@@ -447,5 +449,6 @@
 
 
 <script src="https://castimonia.com/assets/js/archive.js?v&#x3D;6e635e078242a130bf32bd2769d9e550" defer></script>
+<script src="https://castimonia.com/assets/js/search.js?v&#x3D;a28a34c5343826285c2770e18d315379" defer></script>
 </body>
 </html>
